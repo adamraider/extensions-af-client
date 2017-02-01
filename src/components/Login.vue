@@ -1,5 +1,5 @@
 <template lang="pug">
-  .content
+  .content(v-show="!$store.state.loading")
     .heading Login
     .login
       .error(v-if="error") {{ error }}
