@@ -1,5 +1,5 @@
 <template lang="pug">
-  .content
+  .content(v-show="!$store.state.loading")
     .search
       input(ref="input" type="text" placeholder="Search for dope af Chrome extensions..." v-model="search")
     extension(v-for="extension in filteredExtensions", :extension="extension")
@@ -46,17 +46,17 @@ export default {
 
 <style lang="sass" scoped>
 .search
-  margin-bottom: 2rem
+  margin-bottom: 2em
   input
     background-color: rgba(0,0,0,.75)
     border: none
     outline: none
-    padding: 0.6rem 1.1rem
+    padding: 0.6em 1.1em
     border-radius: 4px
     width: 100%
     color: #fff
     font-weight: bold
     font-style: italic
-    font-size: 1.2rem
+    font-size: 1.2em
     font-family: inherit
 </style>

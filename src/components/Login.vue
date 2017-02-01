@@ -55,7 +55,7 @@ form
   margin-bottom: 10px
 
 input, button
-  padding: 0.5rem 1rem
+  padding: 0.5em 1em
   font-size: inherit
   font-family: inherit
   border: none

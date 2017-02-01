@@ -1,5 +1,5 @@
 <template lang="pug">
-  .content
+  .content(v-show="!$store.state.loading")
     .heading Trending
     extension(v-for="extension in $store.state.extensions" ,:extension="extension")
 </template>

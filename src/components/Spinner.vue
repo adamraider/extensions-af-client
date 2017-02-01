@@ -9,7 +9,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-$size: 2rem
+$size: 2em
 $speed: 2s
 $color: #fff
 .loader
@@ -17,7 +17,7 @@ $color: #fff
   top: 42%
   left: 50%
   transform: translate(-50%, -50%)
-  font-size: 1rem
+  font-size: 1em
   overflow: visible
   padding-top: $size
 
@@ -39,8 +39,8 @@ $color: #fff
   margin-left: 50%
   transform: translateX(-50%)
   margin: 2em 0 0 50%
-  letter-spacing: 0.1rem
-  line-height: 1.5rem
+  letter-spacing: 0.1em
+  line-height: 1.5em
   white-space: nowrap
   animation: loader-label $speed infinite cubic-bezier(0.215, 0.61, 0.355, 1)
 

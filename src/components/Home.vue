@@ -1,10 +1,10 @@
 <template lang="pug">
-  .content
-    //- .heading Featured 🔑
-    //- extension(featured="true")
-    //- br
+  .content(v-show="!$store.state.loading")
+    .heading Featured 🔑
+    extension(v-for="extension in featuredExtensions", :extension="extension")
+    br
     .heading February 21, 2017
-    extension(v-for="extension in $store.state.extensions", :extension="extension")
+    extension(v-for="extension in nonFeaturedExtensions", :extension="extension")
 </template>
 
 <script>
@@ -26,6 +26,18 @@ export default {
 
       this.$store.dispatch('getExtensions').then(() => {
         this.$store.commit('FINISH_LOADING')
+      })
+    }
+  },
+  computed: {
+    featuredExtensions () {
+      return this.$store.state.extensions.filter(ext => {
+        return ext.featured
+      })
+    },
+    nonFeaturedExtensions () {
+      return this.$store.state.extensions.filter(ext => {
+        return !ext.featured
       })
     }
   }

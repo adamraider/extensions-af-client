@@ -1,6 +1,6 @@
 <template lang="pug">
   .nav
-    .logo extensions.af
+    router-link.logo(to="/today" active-class="active") extensions.af
     ul.nav__menu
       li: router-link(to="/today" active-class="active")
         span.link__icon 💡&nbsp;
@@ -47,31 +47,33 @@ export default {
 
 <style lang="sass" scoped>
 .nav
-  padding: 0 30px
+  padding: 0 0.3em
   @media(min-width: 800px)
+    position: fixed
+    padding: 0 70px 0 30px
     width: 270px
     float: left
-    padding-right: 70px
 
 .logo
   color: #000
-  font-size: 2rem
+  font-size: 2em
   font-weight: bold
   font-style: italic
   text-align: center
+  text-decoration: none
   @media(min-width: 800px)
     text-align: left
 
 .nav__menu
   color: #fff
-  font-size: 1.4rem
+  font-size: 1.4em
   font-weight: bold
   padding: 0
   display: flex
   justify-content: space-between
   @media(min-width: 800px)
     display: block
-    margin-bottom: 10rem
+    margin-bottom: 10em
   li
     list-style-type: none
     float: left
@@ -89,7 +91,7 @@ export default {
   vertical-align: middle
 
 .link__icon
-  font-size: 1.8rem
+  font-size: 1.3em
 
 .link__name
   font-style: italic
@@ -102,10 +104,10 @@ export default {
     border: none
     outline: none
     border-radius: 10px
-    font-size: 0.9rem
+    font-size: 0.9em
     color: #fff
-    padding: 0.4rem 1rem
-    margin-bottom: .43rem
+    padding: 0.4em 1em
+    margin-bottom: .43em
     background-color: #281427
     width: 100%
     &::-webkit-input-placeholder
@@ -121,18 +123,19 @@ export default {
        color: #fff
 
 .submit
-  border-radius: 2rem
+  border-radius: 2em
   background: linear-gradient(135deg, #ffb948, #ff45ad, #a723ff)
   box-shadow: 0 0 20px rgba(0,0,0,.1)
   outline: none
   border: none
   color: #fff
-  padding: 0.5rem 1rem
+  padding: 0.5em 1em
   width: 100%
-  font-size: 1rem
+  font-size: 1em
   font-family: inherit
   font-weight: bold
   font-style: italic
+  margin-bottom: 1.5em
   &:hover
     cursor: pointer
 
