@@ -1,7 +1,7 @@
 <template lang="pug">
   .content
     .heading Review Extensions
-    extension(v-for="extension in $store.state.extensions", :extension="extension")
+    extension(v-for="extension in $store.state.extensions", :extension="extension", admin="true")
 </template>
 
 <script>
@@ -27,7 +27,7 @@ export default {
     fetchData () {
       this.$store.commit('START_LOADING')
 
-      this.$store.dispatch('getExtensions').then(() => {
+      this.$store.dispatch('getAllExtensions').then(() => {
         this.$store.commit('FINISH_LOADING')
       })
     }
@@ -42,7 +42,7 @@ export default {
     color: #fff
 
   $extensionBorderSize: 5px
-  .extension
+  .extension--published
     background-color: #fff
     color: #535353
     z-index: 1

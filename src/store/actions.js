@@ -2,8 +2,20 @@ import Vue from 'vue'
 import api from '../api'
 import * as types from './types'
 
-export const getExtensions = ({ commit }, payload) => {
+export const getPublished = ({ commit }, payload) => {
   let p = api.getPublished(payload)
+
+  p.then(res => {
+    commit(types.SET_EXTENSIONS, {
+      extensions: res.body
+    })
+  })
+
+  return p
+}
+
+export const getAllExtensions = ({ commit }, payload) => {
+  let p = api.getAllExtensions(payload)
 
   p.then(res => {
     commit(types.SET_EXTENSIONS, {

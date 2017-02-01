@@ -1,11 +1,12 @@
 <template lang="pug">
   .content
     .heading Login
-    .error(v-if="error") {{ error }}
-    form(@submit.prevent="login()")
-      input(type="text" placeholder="email" v-model="email")
-      input(type="password" placeholder="password" v-model="password")
-      button(type="submut") Submit
+    .login
+      .error(v-if="error") {{ error }}
+      form(@submit.prevent="login()")
+        input(ref="email" type="text" placeholder="email" v-model="email")
+        input(type="password" placeholder="password" v-model="password")
+        button(type="submut") Submit
 </template>
 
 <script>
@@ -20,7 +21,8 @@ export default {
       error: null
     }
   },
-  created () {
+  mounted () {
+    this.$refs.email.focus()
   },
   methods: {
     login () {

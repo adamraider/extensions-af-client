@@ -24,7 +24,7 @@ export default {
     fetchData () {
       this.$store.commit('START_LOADING')
 
-      this.$store.dispatch('getExtensions').then(() => {
+      this.$store.dispatch('getPublished').then(() => {
         this.$store.commit('FINISH_LOADING')
       })
     }
