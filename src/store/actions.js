@@ -3,7 +3,19 @@ import api from '../api'
 import * as types from './types'
 
 export const getExtensions = ({ commit }, payload) => {
-  let p = api.getExtensions(payload)
+  let p = api.getPublished(payload)
+
+  p.then(res => {
+    commit(types.SET_EXTENSIONS, {
+      extensions: res.body
+    })
+  })
+
+  return p
+}
+
+export const getTrending = ({ commit }, payload) => {
+  let p = api.getTrending(payload)
 
   p.then(res => {
     commit(types.SET_EXTENSIONS, {

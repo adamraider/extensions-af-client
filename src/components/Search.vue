@@ -1,8 +1,8 @@
 <template lang="pug">
   .content
     .search
-      input(ref="input" type="text" placeholder="Search for dope af Chrome extensions...")
-    extension(v-for="extension in $store.state.extensions", :extension="extension")
+      input(ref="input" type="text" placeholder="Search for dope af Chrome extensions..." v-model="search")
+    extension(v-for="extension in filteredExtensions", :extension="extension")
 </template>
 
 <script>
@@ -10,6 +10,11 @@ import Extension from './Extension'
 
 export default {
   components: { Extension },
+  data () {
+    return {
+      search: null
+    }
+  },
   mounted () {
     this.$refs.input.focus()
   },
@@ -22,6 +27,18 @@ export default {
       this.$store.dispatch('getExtensions').then(() => {
         this.$store.commit('FINISH_LOADING')
       })
+    }
+  },
+  computed: {
+    filteredExtensions () {
+      return this.$store.state.extensions.filter(function (extension) {
+        let searchRegex = new RegExp(this.search, 'i')
+        return (
+          searchRegex.test(extension.name) ||
+          searchRegex.test(extension.url) ||
+          searchRegex.test(extension.desc)
+        )
+      }.bind(this))
     }
   }
 }

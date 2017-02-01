@@ -1,7 +1,7 @@
 <template lang="pug">
   .extension(:class="{ 'extension--featured': extension.featured }")
     .trending(v-if="extension.trending") 🔥
-    .rocket 🚀
+    a.rocket(:href="extension.url" target="_blank") 🚀
     .extension__imageWrapper
       img.extension__image(:src="extension.img")
     .extension__info
@@ -54,8 +54,7 @@ $rocketSize: 60px
   height: $extensionHeight
   border-radius: 10px
   position: relative
-  box-shadow: 0 0 20px 0 rgba(0,0,0,0.1)
-  color: #c46bv6
+  box-shadow: 0 0 20px 0 rgba(0,0,0,0.12)
   &:not(:last-child)
     margin-bottom: 1.6rem
 

@@ -6,8 +6,12 @@ Vue.use(VueResource)
 let API_ROOT = process.env.API_ROOT
 
 export default {
-  getExtensions () {
+  getPublished () {
     return Vue.http.get(API_ROOT + 'extensions')
+  },
+
+  getTrending () {
+    return Vue.http.get(API_ROOT + 'extensions/trending')
   },
 
   login (data) {
