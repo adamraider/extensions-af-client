@@ -1,14 +1,14 @@
 <template lang="pug">
   .content(v-show="!$store.state.loading")
     .heading Review Extensions
-    extension(v-for="extension in $store.state.extensions", :extension="extension", admin="true")
+    admin-extension(v-for="extension in $store.state.extensions", :extension="extension")
 </template>
 
 <script>
-import Extension from './Extension'
+import AdminExtension from './AdminExtension'
 
 export default {
-  components: { Extension },
+  components: { AdminExtension },
   data () {
     return {
       extensions: []

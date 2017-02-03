@@ -38,8 +38,19 @@ export const getTrending = ({ commit }, payload) => {
   return p
 }
 
-// auth
+// extension resource
+export const updateExtension = ({ commit }, { extension }) => {
+  console.log('update ext', extension)
+  let p = api.updateExtension(extension.id, extension)
 
+  p.then(res => {
+    commit(types.UPDATE_EXTENSION, { extension })
+  })
+
+  return p
+}
+
+// auth
 export const login = ({ commit }, payload) => {
   let p = api.login(payload)
 

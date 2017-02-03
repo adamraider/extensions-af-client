@@ -1,9 +1,27 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
-
 Vue.use(VueResource)
 
-let API_ROOT = process.env.API_ROOT
+const API_ROOT = process.env.API_ROOT
+const ExtensionResource = Vue.resource(API_ROOT + 'extensions{/id}')
+
+// config
+Vue.http.options.crossOrigin = true
+Vue.http.options.credentials = true
+
+Vue.http.interceptors.push((request, next) => {
+  request.headers = request.headers || {}
+  let jwt = Vue.cookie.get('jwt')
+  if (jwt) {
+    request.headers.set('Authorization', 'Bearer ' + jwt)
+  }
+  next((response) => {
+    if (response.status === 401) {
+      console.log('User unauthorized', response)
+      window.location.hash = '#/login'
+    }
+  })
+})
 
 export default {
   getAllExtensions () {
@@ -18,25 +36,25 @@ export default {
     return Vue.http.get(API_ROOT + 'extensions/trending')
   },
 
+  // Auth
   login (data) {
     return Vue.http.post(API_ROOT + 'user_token', data)
+  },
+
+  // Extension Resource
+  getExtension (id) {
+    return ExtensionResource.get({ id })
+  },
+
+  saveExtension (extension) {
+    return ExtensionResource.save({ extension })
+  },
+
+  updateExtension (id, extension) {
+    return ExtensionResource.update({ id }, { extension })
+  },
+
+  deleteExtension (id) {
+    return ExtensionResource.delete({ id })
   }
 }
-
-// configuration
-Vue.http.options.crossOrigin = true
-Vue.http.options.credentials = true
-
-Vue.http.interceptors.push((request, next) => {
-  request.headers = request.headers || {}
-  let token = Vue.cookie.get('jwt')
-  if (token) {
-    request.headers.set('Authorization', 'Bearer ' + token)
-  }
-  next((response) => {
-    if (response.status === 401) {
-      console.log('User unauthorized', response)
-      window.location.hash = '#/login'
-    }
-  })
-})

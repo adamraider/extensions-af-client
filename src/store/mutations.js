@@ -13,6 +13,18 @@ export const mutations = {
     state.extensions = extensions
   },
 
+  [types.UPDATE_EXTENSION] (state, { extension }) {
+    let indexOfExt
+    for (var i in state.extensions) {
+      if (state.extensions[i].id === extension.id) {
+        indexOfExt = i
+        break
+      }
+    }
+
+    state[indexOfExt] = extension
+  },
+
   [types.START_LOADING] (state) {
     state.loading = true
   },
