@@ -21,9 +21,8 @@
       li(@click="closeNav()" v-if="adminIsAuthenticated"): a(href="javascript:;" @click="logout()")
         span.link__icon 🛁&nbsp;
         span.link__name Logout
-    .nav__submit.submit(@click="closeNav()"): router-link(to="/submit" active-class="active")
-      span.link__icon 🗿
-      //- span.link__name Submit
+      .submit.nav__submit--mobile(@click="closeNav()"): router-link(to="/submit")
+        span Submit an Extension
     new-extension-form.nav__form(:labels="false", :heading="false")
 </template>
 
@@ -136,7 +135,6 @@ export default {
     &.nav__menu--active
       display: flex
     flex-direction: column
-    align-items: center
     justify-content: center
     font-size: 1.5rem
     position: fixed
@@ -146,7 +144,7 @@ export default {
     height: 100vh
     z-index: -1
     background-color: #281427
-    padding: 0 2.5rem
+    padding: 0 2.5rem 0 4rem
     li
       a
         color: #655764 !important
@@ -236,21 +234,42 @@ export default {
   font-style: italic
   margin-bottom: 1.5em
   display: none
+  a
+    color: inherit
+    text-decoration: none
   @media(min-width: 800px)
     display: block
   &:hover
     cursor: pointer
 
+.nav__submit--mobile
+  display: none
+  position: absolute
+  bottom: 2em
+  margin: 0 auto
+  left: 0
+  margin-left: auto
+  right: 0
+  margin-right: auto
+  width: auto
+  max-width: 197px
+  display: inline-block
+  text-align: center
+  @media(max-width: 799px)
+    display: block
+    
 .nav__submit
   position: fixed
   box-shadow: 0 0 20px rgba(0,0,0,.2)
   right: 15px
   bottom: 15px
+  color: #fff
   margin: 0
   display: inline-block
   width: 40px
   height: 40px
   @media(min-width: 800px)
     display: none
+
 
 </style>
