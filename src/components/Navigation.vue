@@ -21,23 +21,28 @@
       li(@click="closeNav()" v-if="adminIsAuthenticated"): a(href="javascript:;" @click="logout()")
         span.link__icon 🛁&nbsp;
         span.link__name Logout
-    button.submit(type="submit") Submit An Extension
-    //- form.nav__form
-    //-   input(type="email" placeholder="Email")
-    //-   input(type="text" placeholder="Extension Name")
-    //-   input(type="url" placeholder="Link to extension")
-    //-   textarea(placeholder="Describe your extension in 140 characters" rows="3")
-      
+    .nav__submit.submit(@click="closeNav()"): router-link(to="/submit" active-class="active")
+      span.link__icon 🗿
+      //- span.link__name Submit
+    new-extension-form(:labels="false", :heading="false")
 </template>
 
 <script>
-import NavToggle from './NavToggle.vue'
+import NavToggle from './NavToggle'
+import NewExtensionForm from './NewExtensionForm'
+import api from '../api'
 
 export default {
-  components: { NavToggle },
+  components: { NavToggle, NewExtensionForm },
   data () {
     return {
-      navIsOpen: false
+      navIsOpen: false,
+      newExtension: {
+        email: 'adamjraider@gmail.com',
+        name: 'raider\'s extension',
+        url: 'http://adamraider.me',
+        desc: 'aohdoashdoiashdoasdhoashdasd'
+      }
     }
   },
   methods: {
@@ -52,6 +57,25 @@ export default {
 
     closeNav () {
       this.navIsOpen = false
+    },
+
+    createExtension () {
+      console.log('submitting ext', this.newExtension)
+      api.createExtension(this.newExtension).then(res => {
+        console.log('Extension created', res)
+        this.newExtension = {
+          email: null,
+          name: null,
+          url: null,
+          desc: null
+        }
+      }).catch(res => {
+        console.log('Error creating extension', res)
+      })
+    },
+
+    updateFile (e) {
+      this.newExtension.image = e.target.files[0] || e.dataTransfer.files[0] || e.target.result
     }
   },
   computed: {
@@ -131,7 +155,6 @@ export default {
           color: #fff !important
   @media(min-width: 800px)
     display: block
-    margin-bottom: 10em
   li
     list-style-type: none
     float: left
@@ -166,6 +189,9 @@ export default {
   font-style: italic
 
 .nav__form
+  display: none
+  @media(min-width: 800px)
+    display: block
   input, textarea
     font-family: inherit
     font-weight: bold
@@ -179,6 +205,10 @@ export default {
     margin-bottom: .43em
     background-color: #281427
     width: 100%
+    max-height: 0
+    overflow: hidden
+    transition: max-height 0.5s
+    max-height: 300px
     &::-webkit-input-placeholder
        color: #fff
 
@@ -210,5 +240,17 @@ export default {
     display: block
   &:hover
     cursor: pointer
+
+.nav__submit
+  position: fixed
+  box-shadow: 0 0 20px rgba(0,0,0,.2)
+  right: 15px
+  bottom: 15px
+  margin: 0
+  display: inline-block
+  width: 40px
+  height: 40px
+  @media(min-width: 800px)
+    display: none
 
 </style>

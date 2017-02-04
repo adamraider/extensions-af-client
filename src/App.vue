@@ -71,6 +71,7 @@ body
 $navWidth: 270px
 .content
   padding: 0 0.3em
+  margin-bottom: 4rem
   @media(min-width: 800px)
     padding: 0 0 0 70px
     float: left

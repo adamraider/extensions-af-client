@@ -46,8 +46,13 @@ export default {
     return ExtensionResource.get({ id })
   },
 
-  saveExtension (extension) {
-    return ExtensionResource.save({ extension })
+  createExtension (data) {
+    return Vue.http.post(API_ROOT + 'extensions', data, {
+      emulateJSON: true,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
   },
 
   updateExtension (id, extension) {

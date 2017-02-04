@@ -9,6 +9,7 @@ import About from '../components/About.vue'
 import Search from '../components/Search.vue'
 import Admin from '../components/Admin.vue'
 import Login from '../components/Login.vue'
+import Submit from '../components/Submit.vue'
 
 const router = new VueRouter({
   routes: [
@@ -27,6 +28,10 @@ const router = new VueRouter({
     {
       path: '/search',
       component: Search
+    },
+    {
+      path: '/submit',
+      component: Submit
     },
     {
       path: '/admin',

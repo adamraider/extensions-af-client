@@ -21,7 +21,7 @@ export const mutations = {
         break
       }
     }
-
+    console.log('UPDATE_EXTENSION', extension)
     state[indexOfExt] = extension
   },
 

@@ -44,7 +44,7 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 .search
   margin-bottom: 2em
   input

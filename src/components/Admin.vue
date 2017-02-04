@@ -1,7 +1,9 @@
 <template lang="pug">
   .content(v-show="!$store.state.loading")
     .heading Review Extensions
-    admin-extension(v-for="extension in $store.state.extensions", :extension="extension")
+    .search
+      input(ref="input" type="text" placeholder="Search for dope af Chrome extensions..." v-model="search")
+    admin-extension(v-for="extension in filteredExtensions", :extension="extension")
 </template>
 
 <script>
@@ -11,6 +13,7 @@ export default {
   components: { AdminExtension },
   data () {
     return {
+      search: null,
       extensions: []
     }
   },
@@ -30,6 +33,18 @@ export default {
       this.$store.dispatch('getAllExtensions').then(() => {
         this.$store.commit('FINISH_LOADING')
       })
+    }
+  },
+  computed: {
+    filteredExtensions () {
+      return this.$store.state.extensions.filter(function (extension) {
+        let searchRegex = new RegExp(this.search, 'i')
+        return (
+          searchRegex.test(extension.name) ||
+          searchRegex.test(extension.url) ||
+          searchRegex.test(extension.desc)
+        )
+      }.bind(this))
     }
   }
 }
@@ -66,4 +81,7 @@ export default {
         color: #ff45ad
         position: relative
         display: inline-block
+  .nav__form
+    input, textarea
+      border: 1px solid #fff
 </style>
