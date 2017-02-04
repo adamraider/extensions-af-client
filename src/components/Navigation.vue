@@ -243,9 +243,8 @@ export default {
     cursor: pointer
 
 .nav__submit--mobile
-  display: none
   position: absolute
-  bottom: 2em
+  bottom: 3.5em
   margin: 0 auto
   left: 0
   margin-left: auto
@@ -257,7 +256,8 @@ export default {
   text-align: center
   @media(max-width: 799px)
     display: block
-    
+  display: none
+
 .nav__submit
   position: fixed
   box-shadow: 0 0 20px rgba(0,0,0,.2)
