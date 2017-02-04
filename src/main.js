@@ -6,6 +6,9 @@ import App from './App'
 import VueCookie from 'vue-cookie'
 Vue.use(VueCookie)
 
+import VeeValidate from 'vee-validate'
+Vue.use(VeeValidate)
+
 import router from './router'
 import store from './store'
 

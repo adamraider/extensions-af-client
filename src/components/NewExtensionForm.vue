@@ -5,31 +5,50 @@
     template(v-else)
       h1.heading(v-if="heading") Submit an extension
       .error(v-if="error") Uh oh, there was an error: {{ error }}
-      form.form(@submit.prevent="createExtension")
-        label(v-if="labels") Your Email
-        input(type="email"
-              v-model="extension.email"
-              placeholder="elon@tesla.com"
-              required)
-        label(v-if="labels") Name of Extension
-        input(type="text"
-              v-model="extension.name"
-              placeholder="Netflix Parrot"
-              required)
-        label(v-if="labels") URL or Website
-        input(type="url"
-              v-model="extension.url"
-              placeholder="https://extensions.af"
-              required)
-        label(v-if="labels") Image
-        input(type="file"
-              ref="file"
-              @change="updateFile"
-              placeholder="Extension image (200x200)"
-              required)
-        label(v-if="labels") Description
-        textarea(placeholder="Describe your extension in 140 characters" v-model="extension.desc" rows="3")
-        button.submit(type="submit") Submit An Extension
+      form.form(@submit.prevent="validateBeforeSubmit")
+        .inputs
+          .field
+            label(v-if="labels") Your Email
+            input(type="email"
+                  name="email"
+                  v-model="extension.email"
+                  placeholder="elon@tesla.com"
+                  v-validate="'required|email'")
+            .field__error {{ errors.first('email') }}
+          .field
+            label(v-if="labels") Name of Extension
+            input(type="text"
+                  name="name"
+                  v-model="extension.name"
+                  placeholder="Netflix Parrot"
+                 v-validate="'required'")
+          .field__error {{ errors.first('name') }}
+          .field
+            label(v-if="labels") URL or Website
+            input(type="text"
+                  name="url"
+                  v-model="extension.url"
+                  placeholder="https://extensions.af"
+                  v-validate="'required|url'")
+            .field__error {{ errors.first('url') }}
+          .field
+            label(v-if="labels") Image
+            input(type="file"
+                  ref="file"
+                  name="image"
+                  @change="updateFile"
+                  placeholder="Extension image (200x200)"
+                  required)
+            .field__error {{ errors.first('image') }}
+          .field
+            label(v-if="labels") Description
+            textarea(placeholder="Describe your extension in 140 characters" 
+                     name="desc"
+                     v-model="extension.desc" 
+                     rows="3"
+                     v-validate="'required|max:140'")
+            .field__error {{ errors.first('desc') }}
+        button.submit(type="submit") Submit an awesome af extension
 </template>
 
 <script>
@@ -50,15 +69,15 @@ export default {
       done: false,
       error: null,
       extension: {
-        email: null,
-        name: null,
-        desc: null,
-        url: null
+        email: '',
+        name: '',
+        desc: '',
+        url: ''
       }
     }
   },
   methods: {
-    createExtension (e) {
+    createExtension () {
       let self = this
       let data = new FormData(this.extension)
       data.append('extension[name]', this.extension.name)
@@ -71,10 +90,10 @@ export default {
       api.createExtension(data).then(res => {
         console.log('Extension created', res)
         self.extension = {
-          email: null,
-          name: null,
-          url: null,
-          desc: null
+          email: '',
+          name: '',
+          url: '',
+          desc: ''
         }
         self.done = true
         self.error = null
@@ -87,6 +106,15 @@ export default {
     updateFile (e) {
       let file = e.target.files[0] || e.dataTransfer.files[0] || e.target.result
       this.$set(this.extension, 'image', file)
+    },
+
+    validateBeforeSubmit (e) {
+      e.preventDefault()
+      this.$validator.validateAll().then(() => {
+        this.createExtension()
+      }).catch(() => {
+
+      })
     }
   }
 }
@@ -96,7 +124,16 @@ export default {
 .form
   label 
     font-weight: bold
+    color: #000
+
+  .field
+    &:not(:last-child)
+      margin-bottom: .43em
+
+  .field__error
     color: #fff
+    font-weight: bold
+    font-size: 0.9rem
 
   input, textarea
     font-family: inherit
@@ -104,11 +141,11 @@ export default {
     font-style: italic
     border: none
     outline: none
-    border-radius: 10px
+    border-radius: 5px
     font-size: 1rem
     color: #fff
     padding: 0.4em 1em
-    margin-bottom: .43em
+    margin: 0
     background-color: #281427
     width: 100%
     max-height: 0
@@ -116,16 +153,34 @@ export default {
     transition: max-height 0.5s
     max-height: 300px
     &::-webkit-input-placeholder
-       color: #fff
+       color: #f1c6e3
 
     &:-moz-placeholder /* Firefox 18- */
-       color: #fff 
+       color: #f1c6e3
 
     &::-moz-placeholder  /* Firefox 19+ */
-       color: #fff 
+       color: #f1c6e3
 
     &:-ms-input-placeholder  
-       color: #fff
+       color: #f1c6e3
+
+.inputs
+  position: relative
+  margin-bottom: 20px
+  &::after
+    content: ''
+    display: block
+    margin: 0 auto
+    clear: both
+    position: relative
+    top: -6px
+    left: 0
+    right: 0
+    width: 0
+    height: 0
+    border-left: 14px solid transparent
+    border-right: 14px solid transparent
+    border-top: 18px solid #281427
 
 .error
   font-weight: bold
@@ -134,7 +189,7 @@ export default {
 
 .submit
   border-radius: 2em
-  background: linear-gradient(135deg, #ffb948, #ff45ad, #a723ff)
+  background-color: #000
   box-shadow: 0 0 20px rgba(0,0,0,.1)
   outline: none
   border: none

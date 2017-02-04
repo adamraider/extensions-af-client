@@ -93,7 +93,7 @@ $rocketSize: 2em
   padding-right: 1.5em
 
 .extension__image
-  width: 90px
+  width: 6em
   height: auto
 
 .extension__info

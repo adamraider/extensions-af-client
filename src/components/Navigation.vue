@@ -23,25 +23,76 @@
         span.link__name Logout
       .submit.nav__submit--mobile(@click="closeNav()"): router-link(to="/submit")
         span Submit an Extension
-    new-extension-form.nav__form(:labels="false", :heading="false")
+    .nav__form.newExtensionForm
+      .done(v-if="done")
+        h1.heading 👍 Thanks for your submission
+      template(v-else)
+        .error(v-if="error") Uh oh, there was an error: {{ error }}
+        form.form(ref="form" @submit="validateBeforeSubmit(e)")
+          .inputs(:class="{ 'is-showing': showForm }")
+            .field
+              input(type="email"
+                    v-model="newExtension.email"
+                    placeholder="elon@tesla.com"
+                    name="email"
+                    v-validate="'required|email'")
+              .field__error {{ errors.first('email') }}
+            .field
+              input(type="text"
+                    v-model="newExtension.name"
+                    placeholder="Netflix Parrot"
+                    name="name"
+                    v-validate="'required'")
+              .field__error {{ errors.first('name') }}
+            .field
+              input(type="text"
+                    v-model="newExtension.url"
+                    placeholder="https://extensions.af"
+                    name="url"
+                    v-validate="'required|url'")
+              .field__error {{ errors.first('url') }}
+            .field
+              input(type="file"
+                    ref="file"
+                    name="image"
+                    @change="updateFile"
+                    placeholder="Extension image (200x200)"
+                    required)
+              .field__error {{ errors.first('image') }}
+            .field
+              textarea(placeholder="Describe your extension in 140 characters"
+                       v-model="newExtension.desc"
+                       rows="3"
+                       name="desc"
+                       v-validate="'required|max:140'")
+              .field__error {{ errors.first('desc') }}
+          button.submit(href="javascript:;" @click="validateBeforeSubmit") Submit an awesome af extension
 </template>
 
 <script>
 import NavToggle from './NavToggle'
-import NewExtensionForm from './NewExtensionForm'
 import api from '../api'
+import FormData from 'form-data'
 
 export default {
-  components: { NavToggle, NewExtensionForm },
+  components: { NavToggle },
   data () {
     return {
       navIsOpen: false,
+      done: false,
+      error: null,
+      showForm: false,
       newExtension: {
-        email: 'adamjraider@gmail.com',
-        name: 'raider\'s extension',
-        url: 'http://adamraider.me',
-        desc: 'aohdoashdoiashdoasdhoashdasd'
+        email: '',
+        name: '',
+        desc: '',
+        url: ''
       }
+    }
+  },
+  watch: {
+    '$route' () {
+      this.showForm = false
     }
   },
   methods: {
@@ -59,22 +110,45 @@ export default {
     },
 
     createExtension () {
-      console.log('submitting ext', this.newExtension)
-      api.createExtension(this.newExtension).then(res => {
+      let self = this
+      let data = new FormData(this.newExtension)
+      data.append('extension[name]', this.newExtension.name)
+      data.append('extension[url]', this.newExtension.url)
+      data.append('extension[desc]', this.newExtension.desc)
+      data.append('extension[image]', this.newExtension.image)
+      data.append('extension[email]', this.newExtension.email)
+
+      console.log('submitting ext', data)
+      api.createExtension(data).then(res => {
         console.log('Extension created', res)
-        this.newExtension = {
-          email: null,
-          name: null,
-          url: null,
-          desc: null
+        self.extension = {
+          email: '',
+          name: '',
+          url: '',
+          desc: ''
         }
+        self.done = true
+        self.error = null
       }).catch(res => {
         console.log('Error creating extension', res)
+        self.error = res.body.error
       })
     },
 
     updateFile (e) {
-      this.newExtension.image = e.target.files[0] || e.dataTransfer.files[0] || e.target.result
+      let file = e.target.files[0] || e.dataTransfer.files[0] || e.target.result
+      this.$set(this.newExtension, 'image', file)
+    },
+
+    validateBeforeSubmit (e) {
+      e.preventDefault()
+      if (this.showForm) {
+        this.$validator.validateAll().then(() => {
+          this.createExtension()
+        })
+      } else {
+        this.showForm = true
+      }
     }
   },
   computed: {
@@ -100,6 +174,8 @@ export default {
     padding: 0
     width: 270px
     float: left
+    height: 100%
+    overflow-y: auto
 
 .logo
   color: #fff
@@ -112,6 +188,7 @@ export default {
   text-align: center
   text-decoration: none
   display: inline-block
+  border-radius: 5px
   @media(min-width: 800px)
     margin-bottom: 2rem
     text-align: left
@@ -186,90 +263,36 @@ export default {
 .link__name
   font-style: italic
 
-.nav__form
-  display: none
-  @media(min-width: 800px)
-    display: block
-  input, textarea
-    font-family: inherit
-    font-weight: bold
-    font-style: italic
-    border: none
-    outline: none
-    border-radius: 10px
-    font-size: 0.9em
-    color: #fff
-    padding: 0.4em 1em
-    margin-bottom: .43em
-    background-color: #281427
-    width: 100%
-    max-height: 0
-    overflow: hidden
-    transition: max-height 0.5s
-    max-height: 300px
-    &::-webkit-input-placeholder
-       color: #fff
-
-    &:-moz-placeholder /* Firefox 18- */
-       color: #fff 
-
-    &::-moz-placeholder  /* Firefox 19+ */
-       color: #fff 
-
-    &:-ms-input-placeholder  
-       color: #fff
-
-.submit
-  border-radius: 2em
-  background: linear-gradient(135deg, #ffb948, #ff45ad, #a723ff)
-  box-shadow: 0 0 20px rgba(0,0,0,.1)
-  outline: none
-  border: none
-  color: #fff
-  padding: 0.5em 1em
-  width: 100%
-  font-size: 1em
-  font-family: inherit
-  font-weight: bold
-  font-style: italic
-  margin-bottom: 1.5em
-  display: none
-  a
-    color: inherit
-    text-decoration: none
-  @media(min-width: 800px)
-    display: block
-  &:hover
-    cursor: pointer
-
 .nav__submit--mobile
   position: absolute
   bottom: 3.5em
   margin: 0 auto
   left: 0
-  margin-left: auto
   right: 0
+  margin-left: auto
   margin-right: auto
+  text-align: center
   width: auto
   max-width: 197px
   display: inline-block
-  text-align: center
+  a
+    text-decoration: none
+    color: inherit
   @media(max-width: 799px)
     display: block
   display: none
 
-.nav__submit
-  position: fixed
-  box-shadow: 0 0 20px rgba(0,0,0,.2)
-  right: 15px
-  bottom: 15px
-  color: #fff
-  margin: 0
-  display: inline-block
-  width: 40px
-  height: 40px
-  @media(min-width: 800px)
+.inputs
+  max-height: 0px
+  transition: max-height 0.5s
+  overflow: hidden
+  &.is-showing
+    max-height: 300px
+
+.has-errors
+  border: 1px solid red
+
+.nav__form
+  @media(max-width: 799px)
     display: none
-
-
 </style>

@@ -10,9 +10,12 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.heading
+  color: #000
+  
 .about
   font-weight: bold
   font-size: 1.1em
   line-height: 1.45
-  color: #fff
+  color: #000
 </style>

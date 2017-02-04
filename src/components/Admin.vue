@@ -81,7 +81,5 @@ export default {
         color: #ff45ad
         position: relative
         display: inline-block
-  .nav__form
-    input, textarea
-      border: 1px solid #fff
+
 </style>
