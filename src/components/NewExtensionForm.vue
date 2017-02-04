@@ -65,6 +65,7 @@ export default {
       data.append('extension[url]', this.extension.url)
       data.append('extension[desc]', this.extension.desc)
       data.append('extension[image]', this.extension.image)
+      data.append('extension[email]', this.extension.email)
 
       console.log('submitting ext', data)
       api.createExtension(data).then(res => {
