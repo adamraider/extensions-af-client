@@ -24,7 +24,7 @@
     .nav__submit.submit(@click="closeNav()"): router-link(to="/submit" active-class="active")
       span.link__icon 🗿
       //- span.link__name Submit
-    new-extension-form(:labels="false", :heading="false")
+    new-extension-form.nav__form(:labels="false", :heading="false")
 </template>
 
 <script>
