@@ -13,7 +13,7 @@ export default {
   components: { Extension },
   data () {
     return {
-      search: null
+      search: ''
     }
   },
   mounted () {

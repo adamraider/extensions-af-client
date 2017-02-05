@@ -14,7 +14,7 @@ export default {
   components: { AdminExtension },
   data () {
     return {
-      search: null,
+      search: '',
       extensions: []
     }
   },
