@@ -166,7 +166,7 @@ export default {
 
 .inputs
   position: relative
-  margin-bottom: 20px
+  margin-bottom: 2px
   &::after
     content: ''
     display: block
@@ -178,9 +178,9 @@ export default {
     right: 0
     width: 0
     height: 0
-    border-left: 14px solid transparent
-    border-right: 14px solid transparent
-    border-top: 18px solid #281427
+    border-left: 8px solid transparent
+    border-right: 8px solid transparent
+    border-top: 10px solid #281427
 
 .error
   font-weight: bold
@@ -190,7 +190,7 @@ export default {
 .submit
   border-radius: 2em
   background-color: #000
-  box-shadow: 0 0 20px rgba(0,0,0,.1)
+  box-shadow: 0 0 30px 0 rgba(189, 43, 235, 0.5)
   outline: none
   border: none
   color: #fff

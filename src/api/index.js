@@ -61,5 +61,10 @@ export default {
 
   deleteExtension (id) {
     return ExtensionResource.delete({ id })
+  },
+
+  // leads
+  createLead (data) {
+    return Vue.http.post(API_ROOT + 'leads', data)
   }
 }

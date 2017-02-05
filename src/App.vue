@@ -72,6 +72,7 @@ $navWidth: 270px
 .content
   padding: 0 0.3em
   margin-bottom: 4rem
+  position: relative
   @media(min-width: 800px)
     padding: 0 0 0 70px
     float: left
@@ -84,9 +85,4 @@ $navWidth: 270px
   color: #fff
   margin-bottom: 0.8em
 
-.loading
-  font-size: 2em
-  font-weight: bold
-  text-align: center
-  color: #fff
 </style>

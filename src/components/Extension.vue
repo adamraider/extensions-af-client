@@ -7,9 +7,9 @@
         .heart__form__text Thank you for the vote!
       template(v-else)
         .heart__form__text Enter email to vote!
-        form(action="https://dev.us10.list-manage.com/subscribe/post?u=3d974b5065abb2dae62acced3&amp;id=81fde23d1a" method="post" target="_blank" id="mc-embedded-subscribe-form")
+        form(@submit.prevent="submitHeart")
           .field
-            input(type="email" name="MERGE0" placeholder="elon@tesla.com" v-model="email")
+            input(type="email" placeholder="elon@tesla.com" v-model="email")
             button.field__icon(type="submit") 😍
     a.rocket(:href="extension.url" target="_blank") 🚀&nbsp; Visit
     .extension__imageWrapper
@@ -20,6 +20,9 @@
 </template>
 
 <script>
+import api from '../api'
+import eventHub from '../eventHub'
+
 export default {
   props: {
     extension: {
@@ -36,18 +39,33 @@ export default {
       voteDone: false
     }
   },
+  created () {
+    eventHub.$on('open-heart-popup', this.closeHeartForm)
+  },
+  beforeDestroy () {
+    eventHub.$off('open-heart-popup', this.closeHeartForm)
+  },
   methods: {
     like (e) {
-      this.showHeartForm = true
+      if (this.showHeartForm) {
+        eventHub.$emit('open-heart-popup')
+      } else {
+        eventHub.$emit('open-heart-popup')
+        this.showHeartForm = true
+      }
     },
 
     submitHeart (e) {
-      const url = 'https://dev.us10.list-manage.com/subscribe/post?u=3d974b5065abb2dae62acced3&amp;id=81fde23d1a'
-      this.$http.post(url, {
-        EMAIL: this.email
+      api.createLead({
+        email: this.email
       }).then(res => {
         this.voteDone = true
+        this.showHeartForm = false
       })
+    },
+
+    closeHeartForm () {
+      this.showHeartForm = false
     }
   },
   computed: {
@@ -68,7 +86,7 @@ $rocketSize: 2em
 .heart
   position: absolute
   right: 15px
-  top: 10px
+  top: 15px
   font-size: 1.3em
   color: #ff4564
   display: block
@@ -86,7 +104,7 @@ $rocketSize: 2em
   position: absolute
   top: -10px
   box-shadow: 0 0 14px rgba(0,0,0,.3)
-  right: 40px
+  right: 44px
   font-weight: bold
   font-style: italic
   border-radius: 4px
@@ -97,12 +115,12 @@ $rocketSize: 2em
     margin: 0 auto
     clear: both
     position: absolute
-    top: 15px
+    top: 20px
     right: -8px
     width: 0
     height: 0
     border-bottom: 10px solid transparent
-    border-left: 16px solid #281427
+    border-left: 12px solid #281427
     border-top: 10px solid transparent
 
   .field
@@ -136,6 +154,7 @@ $rocketSize: 2em
 
 .trending
   position: absolute
+  top: 0
   left: -48px
   font-size: 2em
   line-height: $extensionHeight
@@ -179,7 +198,7 @@ $rocketSize: 2em
 .extension--featured
   background: #281427
   color: #fff
-  box-shadow: 0 0 20px 0 rgba(189, 43, 235, 0.75)
+  box-shadow: 0 0 30px 0 rgba(189, 43, 235, 0.5)
 
 .extension__imageWrapper
   display: flex

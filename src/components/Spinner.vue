@@ -9,14 +9,14 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-$size: 2em
+$size: 1em
 $speed: 2s
 $color: #fff
 .loader
   position: absolute
-  top: 42%
+  top: 0
   left: 50%
-  transform: translate(-50%, -50%)
+  transform: translate(-50%, 0)
   font-size: 1em
   overflow: visible
   padding-top: $size
