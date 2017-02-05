@@ -7,8 +7,8 @@
       .imageWrapper: img.image(:src="extension.image")
       .info: .name {{ extension.name }}
       .moreBtn(@click="toggleExtended()")
-          span.icon-keyboard_arrow_up(v-if="extended")
-          span.icon-keyboard_arrow_down(v-else)
+          img(v-if="extended" src="/static/arrow_up.svg" width="16px")
+          img(v-else src="/static/arrow_down.svg" width="16px")
     .more(:class="{ 'more--active': extended}")
       .options
         span Featured&nbsp;

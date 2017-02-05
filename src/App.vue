@@ -22,6 +22,7 @@ export default {
 
 <style lang="sass">
 $icomoon-font-base: '/static/icomoon/fonts/'
+@import './assets/bootstrap-reboot.min'
 @import '../static/icomoon/style'
 
 html
