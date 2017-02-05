@@ -82,5 +82,7 @@ export default {
         color: #ff45ad
         position: relative
         display: inline-block
-
+  .submit
+    background: linear-gradient(135deg, #ffb948, #ff45ad, #a723ff)
+    box-shadow: 0 0 20px rgba(0,0,0,.3)
 </style>

@@ -274,6 +274,8 @@ export default {
   width: auto
   max-width: 197px
   display: inline-block
+  background: linear-gradient(135deg, #ffb948, #ff45ad, #a723ff)
+  box-shadow: 0 0 20px rgba(0,0,0,.3)
   a
     text-decoration: none
     color: inherit
