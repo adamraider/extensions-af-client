@@ -66,7 +66,7 @@
                        name="desc"
                        v-validate="'required|max:140'")
               .field__error {{ errors.first('desc') }}
-          button.submit(href="javascript:;" @click="validateBeforeSubmit") Submit an awesome af extension
+          button.submit(href="javascript:;" @click="validateBeforeSubmit") Submit a dope af extension
 </template>
 
 <script>
@@ -175,7 +175,6 @@ export default {
     width: 270px
     float: left
     height: 100%
-    overflow-y: auto
 
 .logo
   color: #fff

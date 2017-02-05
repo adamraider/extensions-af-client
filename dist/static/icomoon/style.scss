@@ -26,12 +26,6 @@ $icomoon-font-base: 'fonts/' !default;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-keyboard_arrow_up:before {
-  content: "\e902";
-}
-.icon-keyboard_arrow_down:before {
-  content: "\e903";
-}
 .icon-whatshot:before {
   content: "\e900";
 }
@@ -44,7 +38,18 @@ $icomoon-font-base: 'fonts/' !default;
 .icon-mail:before {
   content: "\e901";
 }
+.icon-arrow-down-outline:before {
+  content: "\e902";
+}
+.icon-arrow-up-outline:before {
+  content: "\e903";
+}
 .icon-link:before {
   content: "\e904";
 }
-
+.icon-heart-o:before {
+  content: "\e907";
+}
+.icon-heart:before {
+  content: "\e908";
+}

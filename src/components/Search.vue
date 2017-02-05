@@ -1,7 +1,8 @@
 <template lang="pug">
   .content(v-show="!$store.state.loading")
     .search
-      input(ref="input" type="text" placeholder="Search for dope af Chrome extensions..." v-model="search")
+      label(for="search") 🔍
+      input(ref="input" type="text" id="search" placeholder="Search for dope af Chrome extensions..." v-model="search")
     extension(v-for="extension in filteredExtensions", :extension="extension")
 </template>
 
@@ -47,12 +48,20 @@ export default {
 <style lang="sass">
 .search
   margin-bottom: 2em
+  background-color: rgba(0,0,0,.75)
+  border-radius: 4px
+  overflow: hidden
+  display: flex
+  label
+    font-size: 1.6rem
+    padding: 0.4em 0.1em 0 1em
   input
-    background-color: rgba(0,0,0,.75)
+    background-color: transparent
     border: none
     outline: none
-    padding: 0.6em 1.1em
-    border-radius: 4px
+    flex-grow: 1
+    width: 100%
+    padding: 0.6em 1.0em 0.6em 0.5em
     width: 100%
     color: #fff
     font-weight: bold

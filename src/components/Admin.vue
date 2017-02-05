@@ -2,7 +2,8 @@
   .content(v-show="!$store.state.loading")
     .heading Review Extensions
     .search
-      input(ref="input" type="text" placeholder="Search for dope af Chrome extensions..." v-model="search")
+      label(for="search") 🔍
+      input(ref="input" type="text" id="search" placeholder="Search for dope af Chrome extensions..." v-model="search")
     admin-extension(v-for="extension in filteredExtensions", :extension="extension")
 </template>
 

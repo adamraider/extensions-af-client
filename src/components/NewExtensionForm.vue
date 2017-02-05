@@ -48,7 +48,7 @@
                      rows="3"
                      v-validate="'required|max:140'")
             .field__error {{ errors.first('desc') }}
-        button.submit(type="submit") Submit an awesome af extension
+        button.submit(type="submit") Submit a dope af extension
 </template>
 
 <script>

@@ -1,7 +1,13 @@
 <template lang="pug">
-  .content(v-show="!$store.state.loading")
+  .content.about(v-show="!$store.state.loading")
     .heading extensions af, bro
-    .about Loem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    p As Not Yet Featured In 
+
+    p Let’s be real, the Chrome Extension Store is not dope AF. So, I created EXTENSIONS.AF - a site to find the dopest extensions out there. When an extension works like it should, you feel a sensation of magic. 
+
+    img(src="http://i.giphy.com/12NUbkX6p4xOO4.gif")
+
+    p Have any questions add me on Snapchat
 </template>
 
 <script>
@@ -18,4 +24,6 @@ export default {
   font-size: 1.1em
   line-height: 1.45
   color: #000
+  @media(min-width: 800px)
+    margin-top: 4.7em
 </style>
