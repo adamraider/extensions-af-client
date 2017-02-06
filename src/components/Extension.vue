@@ -1,7 +1,7 @@
 <template lang="pug">
   .extension(:class="classList")
     .trending(v-if="extension.trending") 🔥
-    .heart.icon-(@click="like")
+    .heart.icon-(@click="like", :class="{ 'heart--active': voteDone }")
     .heart__form.drop(v-if="showHeartForm")
       template(v-if="voteDone")
         .heart__form__text Thank you for the vote!
@@ -51,7 +51,13 @@ export default {
         eventHub.$emit('open-heart-popup')
       } else {
         eventHub.$emit('open-heart-popup')
-        this.showHeartForm = true
+        let leadCreated = window.localStorage.getItem('lead_created')
+        if (leadCreated) {
+          this.voteDone = true
+          this.showHeartForm = true
+        } else {
+          this.showHeartForm = true
+        }
       }
     },
 
@@ -60,7 +66,8 @@ export default {
         email: this.email
       }).then(res => {
         this.voteDone = true
-        this.showHeartForm = false
+        this.showHeartForm = true
+        window.localStorage.setItem('lead_created', true)
       })
     },
 
@@ -92,7 +99,7 @@ $rocketSize: 2em
   display: block
   &:before
     content: "\e907"
-  &:hover
+  &:hover, &.heart--active
     cursor: pointer
     &:before
       content: "\e908"
