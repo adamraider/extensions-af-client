@@ -1,17 +1,23 @@
 <template lang="pug">
   .content(v-show="!$store.state.loading")
-    .heading Featured 🔑
+    .heading(v-if="featuredExtensions.length > 0") Featured 🔑
     extension(v-for="extension in featuredExtensions", :extension="extension")
     br
-    .heading February 21, 2017
+    .heading {{ formattedDate }}
     extension(v-for="extension in nonFeaturedExtensions", :extension="extension")
 </template>
 
 <script>
 import Extension from './Extension'
+import moment from 'moment'
 
 export default {
   components: { Extension },
+  data () {
+    return {
+      date: new Date()
+    }
+  },
   created () {
     this.fetchData()
   },
@@ -34,6 +40,9 @@ export default {
       return this.$store.state.extensions.filter(ext => {
         return !ext.featured
       })
+    },
+    formattedDate () {
+      return moment(this.date).format('MMMM Do YYYY')
     }
   }
 }

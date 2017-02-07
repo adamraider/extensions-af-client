@@ -1,26 +1,29 @@
 <template lang="pug">
-  .extension()
-    .main
-      label.switch
-        input(type="checkbox", :checked="extension.published", @change="update($event, 'published')")
-        .switch__box
-      .imageWrapper: img.image(:src="extension.image")
-      .info: .name {{ extension.name }}
-      .moreBtn(@click="toggleExtended()")
-          img(v-if="extended" src="/static/arrow_up.svg" width="16px")
-          img(v-else src="/static/arrow_down.svg" width="16px")
-    .more(:class="{ 'more--active': extended}")
-      .options
-        span Featured&nbsp;
-        label.slider
-          input(type="checkbox", :checked="extension.featured", @change="update($event, 'featured')")
-          .slider__btn
-        span Trending&nbsp;
-        label.slider
-          input(type="checkbox", :checked="extension.trending", @change="update($event, 'trending')")
-          .slider__btn
-        //- a(href="javascript:;", style="margin-left: auto;") Destroy
-      .desc(v-if="extension.desc") {{ extension.desc }}
+  .extension
+    template(v-if="processing")
+      div Updating...
+    template(v-else)
+      .main
+        label.switch
+          input(type="checkbox", :checked="extension.published", @change="update($event, 'published')")
+          .switch__box
+        .imageWrapper: img.image(:src="extension.image")
+        .info: .name {{ extension.name }}
+        .moreBtn(@click="toggleExtended()")
+            img(v-if="extended" src="/static/arrow_up.svg" width="16px")
+            img(v-else src="/static/arrow_down.svg" width="16px")
+      .more(:class="{ 'more--active': extended}")
+        .options
+          span Featured&nbsp;
+          label.slider
+            input(type="checkbox", :checked="extension.featured", @change="update($event, 'featured')")
+            .slider__btn
+          span Trending&nbsp;
+          label.slider
+            input(type="checkbox", :checked="extension.trending", @change="update($event, 'trending')")
+            .slider__btn
+          //- a(href="javascript:;", style="margin-left: auto;") Destroy
+        .desc(v-if="extension.desc") {{ extension.desc }}
 </template>
 
 <script>
@@ -35,7 +38,8 @@ export default {
   },
   data () {
     return {
-      extended: false
+      extended: false,
+      processing: false
     }
   },
   methods: {
@@ -44,6 +48,7 @@ export default {
     },
 
     update (event, field) {
+      this.processing = true
       let value
 
       // gets value of field
@@ -64,6 +69,10 @@ export default {
       // saves to api
       this.$store.dispatch('updateExtension', {
         extension: clone
+      }).then(res => {
+        this.processing = false
+      }).catch(res => {
+        this.processing = false
       })
     }
   }
