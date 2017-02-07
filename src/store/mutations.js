@@ -22,7 +22,7 @@ export const mutations = {
       }
     }
     console.log('UPDATE_EXTENSION', extension)
-    state[indexOfExt] = extension
+    state.extensions.splice(indexOfExt, 1, extension)
   },
 
   [types.START_LOADING] (state) {
