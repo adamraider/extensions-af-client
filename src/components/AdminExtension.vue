@@ -45,7 +45,6 @@ export default {
 
     update (event, field) {
       let value
-      console.log(event)
 
       // gets value of field
       switch (event.target.type) {
@@ -56,7 +55,7 @@ export default {
           value = event.target.value
           break
       }
-      console.log(`updating ${field} with value of ${value}`)
+      console.log(`Udating extension: ${field} with value of ${value}`)
 
       // updates a cloned obj with new value
       let clone = JSON.parse(JSON.stringify(this.extension))
@@ -65,8 +64,6 @@ export default {
       // saves to api
       this.$store.dispatch('updateExtension', {
         extension: clone
-      }).then(res => {
-        console.log('updated', res)
       })
     }
   }

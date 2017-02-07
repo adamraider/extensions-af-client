@@ -21,7 +21,6 @@ export const mutations = {
         break
       }
     }
-    console.log('UPDATE_EXTENSION', extension)
     state.extensions.splice(indexOfExt, 1, extension)
   },
 

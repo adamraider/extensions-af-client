@@ -46,7 +46,12 @@ export const updateExtension = ({ commit }, { extension }) => {
   p.then(res => {
     commit(types.UPDATE_EXTENSION, { extension })
   })
-
+  p.then(res => {
+    console.log('Extension updated', res)
+  })
+  p.catch(res => {
+    console.log('There was an error updating the extension.')
+  })
   return p
 }
 

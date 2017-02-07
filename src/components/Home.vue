@@ -12,11 +12,6 @@ import Extension from './Extension'
 
 export default {
   components: { Extension },
-  data () {
-    return {
-      extensions: []
-    }
-  },
   created () {
     this.fetchData()
   },
