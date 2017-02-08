@@ -40,14 +40,14 @@
                   placeholder="Extension image (200x200)"
                   required)
             .field__error {{ errors.first('image') }}
-          .field
+          .field.with-down-arrow
             label(v-if="labels") Description
             textarea(placeholder="Describe your extension in 140 characters" 
                      name="desc"
                      v-model="extension.desc" 
                      rows="3"
                      v-validate="'required|max:140'")
-            .field__error {{ errors.first('desc') }}
+          .field__error {{ errors.first('desc') }}
         button.submit(type="submit") Submit a dope af extension
 </template>
 
@@ -167,20 +167,21 @@ export default {
 .inputs
   position: relative
   margin-bottom: 2px
-  &::after
-    content: ''
-    display: block
-    margin: 0 auto
-    clear: both
-    position: relative
-    top: -6px
-    left: 0
-    right: 0
-    width: 0
-    height: 0
-    border-left: 8px solid transparent
-    border-right: 8px solid transparent
-    border-top: 10px solid #281427
+
+.with-down-arrow::after
+  content: ''
+  display: block
+  margin: 0 auto
+  clear: both
+  position: relative
+  top: -7px
+  left: 0
+  right: 0
+  width: 0
+  height: 0
+  border-left: 8px solid transparent
+  border-right: 8px solid transparent
+  border-top: 10px solid #281427
 
 .error
   font-weight: bold

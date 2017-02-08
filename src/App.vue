@@ -37,6 +37,7 @@ body
   transition: background 0.5s
   @media(min-width: 800px)
     margin-top: 0
+    zoom: 80%
 *
   box-sizing: border-box
 
