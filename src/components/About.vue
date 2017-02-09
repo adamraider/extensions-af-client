@@ -1,6 +1,6 @@
 <template lang="pug">
   .content.about(v-show="!$store.state.loading")
-    h1.heading extensions af, bro. As not year featured in...
+    h1.heading extensions af, bro. As not yet featured in...
 
     img.press-logos(src="/static/press_logos.png")
 
